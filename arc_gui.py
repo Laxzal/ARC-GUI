@@ -38,7 +38,7 @@ class TabApp(customtkinter.CTkTabview):
         self.add("ESS Settings")
         self.add("Job Type")
         self.add("Levels")
-        self.add("Database [RMG]")
+        # self.add("Database [RMG]")
         self.add("Species Generator [RMG]")
         self.add('Reactions')
 
@@ -88,11 +88,11 @@ class TabApp(customtkinter.CTkTabview):
         self.tab_view16 = OrbitalLevel(master=self.tab("Levels"), header_name="Orbital Level")
         self.tab_view16.grid(row=2, column=2)
         
-        self.tab_view17 = ThermoDatabase(master=self.tab("Database [RMG]"), header_name='Thermo Database')
-        self.tab_view17.grid(row=0, column=0)
+        # self.tab_view17 = ThermoDatabase(master=self.tab("Database [RMG]"), header_name='Thermo Database')
+        # self.tab_view17.grid(row=0, column=0)
         
-        self.tab_view18 = KinteticsDatabase(master=self.tab("Database [RMG]"), header_name="Kinetics Database")
-        self.tab_view18.grid(row=1, column=0)
+        # self.tab_view18 = KinteticsDatabase(master=self.tab("Database [RMG]"), header_name="Kinetics Database")
+        # self.tab_view18.grid(row=1, column=0)
         
         self.tab_view19 = Species(master=self.tab("Species Generator [RMG]"), header_name="Species Generator")
         #self.tab_view19.grid(row=0, column=0)

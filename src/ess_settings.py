@@ -19,5 +19,18 @@ class essSettings(customtkinter.CTkFrame):
         self.location_label = customtkinter.CTkEntry(self)
         self.location_label.grid(row=1, column=col)
         self.list_of_col_locations.append(col)
+        
+        # Add a button to remove the location
+        self.remove_location_button = customtkinter.CTkButton(self, text="Remove Location", command=lambda: self.remove_location(col))
+        self.remove_location_button.grid(row=2, column=col)
+        
+        # Append the label to the a dictionary of labels and their column location
+        
+    
+    def remove_location(self, col) -> None:
+        self.location_label.destroy()
+        self.remove_location_button.destroy()
+        self.list_of_col_locations.remove(col)
+        
 
         
