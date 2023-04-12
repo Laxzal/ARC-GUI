@@ -21,7 +21,7 @@ class App(customtkinter.CTk):
 
     def __init__(self, fg_color: Optional[Union[str, Tuple[str, str]]] = None, **kwargs):
         super().__init__(fg_color, **kwargs)
-        self.geometry("1600x1500")
+        self.geometry("1600x1200")
         self.title("ARC GUI")
 
         app = TabApp(master=self)

@@ -12,11 +12,19 @@ class Reactions(customtkinter.CTkFrame):
         
         self.generate_rxn = customtkinter.CTkButton(self,text='Generate Reaction List', command=self.gen_rxns)
         self.generate_rxn.grid(row=0, column=1)
+        
+        self.rxn_group_list = []
+        self.rxn_label_list = []
     
         self.species_tab = species
     def gen_rxns(self, event=None):
         
         rxn_dict = self.species_tab.generate_reaction_connections()
+        
+        # Clear the labels
+        for group, label in zip(self.rxn_label_list, self.rxn_group_list):
+            group.destroy()
+            label.destroy()
         
         for i, key in enumerate(rxn_dict.keys()):
             for low_key in rxn_dict[key]:
@@ -35,7 +43,11 @@ class Reactions(customtkinter.CTkFrame):
             self.rxn_group = customtkinter.CTkLabel(self, text=key)
             self.rxn_group.grid(row=i+1, column = 0)
             self.rxn_label = customtkinter.CTkLabel(self, text=full_rxn)
-            self.rxn_label.grid(row=1+ i, column=1)
+            self.rxn_label.grid(row=1+i, column=1)
+            
+            # Append the group and label a list
+            self.rxn_group_list.append(self.rxn_group)
+            self.rxn_label_list.append(self.rxn_label)
             
             
 

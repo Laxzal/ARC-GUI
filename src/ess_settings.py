@@ -12,25 +12,36 @@ class essSettings(customtkinter.CTkFrame):
         
         self.list_of_col_locations = [3]
         # Create a button under the header called add location
-        self.add_location_button = customtkinter.CTkButton(self, text="Add Location", command=lambda: self.add_location(self.list_of_col_locations[-1] + 1, "event"))
+        self.add_location_button = customtkinter.CTkButton(self, text="Add Location", command=self.add_location)
+                                                        #    command=lambda: self.add_location(self.list_of_col_locations[-1] + 1, "event"))
         self.add_location_button.grid(row=1, column=0, columnspan=2)
         
-    def add_location(self, col, event) -> None:
-        self.location_label = customtkinter.CTkEntry(self)
-        self.location_label.grid(row=1, column=col)
+        # Dictionary to store the labels and remove buttons
+        self.labels_and_buttons = {}
+        
+    def add_location(self) -> None:
+        # I want an Entry box to appear under the header with a button to remove it next to it and every entry box should have a unique column location
+        # and also every remove button should remove the entry box that is next to it
+        col = self.list_of_col_locations[-1] + 1
+        
+        location_label = customtkinter.CTkEntry(self)
+        location_label.grid(row=1, column=col)
+        # a button to remove the location
+        remove_location_button = customtkinter.CTkButton(self, text="Remove Location", command=lambda: self.remove_location(col))
+        remove_location_button.grid(row=2, column=col)
+                # Append the label to the a dictionary of labels and their column location
+        self.labels_and_buttons[col] = (location_label, remove_location_button)
+        
+        # Update the list of column locations
         self.list_of_col_locations.append(col)
-        
-        # Add a button to remove the location
-        self.remove_location_button = customtkinter.CTkButton(self, text="Remove Location", command=lambda: self.remove_location(col))
-        self.remove_location_button.grid(row=2, column=col)
-        
-        # Append the label to the a dictionary of labels and their column location
-        
     
     def remove_location(self, col) -> None:
-        self.location_label.destroy()
-        self.remove_location_button.destroy()
+        # Destroy the label and remove button
+        self.labels_and_buttons[col][0].destroy()
+        self.labels_and_buttons[col][1].destroy()
+        
+        # Remove the label and remove button from the dictionary
+        del self.labels_and_buttons[col]
+        
+        # Update the list of column locations
         self.list_of_col_locations.remove(col)
-        
-
-        
