@@ -2,6 +2,8 @@ import customtkinter
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
+from rdkit import Chem
+from rdkit.Chem import Draw
 #import pandas as pd
 
 class Species(customtkinter.CTkFrame):
@@ -42,8 +44,6 @@ class Species(customtkinter.CTkFrame):
         self.rxn_grp_label = customtkinter.CTkLabel(self.main_frame, text='Reaction Group')
         self.rxn_grp_label.grid(row=0, column=7)
         self.rxn_dicts = dict()
-        
-        
         
     def on_select(self, event=None):
         # clear existing species blocks
@@ -105,6 +105,13 @@ class Species(customtkinter.CTkFrame):
 
             self.type_block.append(type_check)
 
+            # Button to generate the image of a molecule - when clicked, the image is shown in a new window
+            show_image_button = customtkinter.CTkButton(self.main_frame, text='Show Image', command=lambda: self.generate_molecule( species_adj_smiles.get(), species_adj_smiles_entry.get(), event=None))
+            show_image_button.grid(row=i+2, column=8, padx=5, pady=5)
+            
+            
+
+
             self.species_blocks.append(species_label_entry)
             self.species_blocks.append(species_adj_smiles)
             self.species_blocks.append(species_adj_smiles_entry)
@@ -121,7 +128,34 @@ class Species(customtkinter.CTkFrame):
                 self.species_blocks[i+2].configure(width=200, height=200)
             elif self.species_blocks[i+1].get() == 'XYZ':
                 self.species_blocks[i+2].configure(width=200, height=400)
-    
+    def generate_molecule(self, adj_smiles_type, smiles, event=None):
+        # opens a new window to display the molecule
+        #print('Generating molecule')
+
+        newWindow = customtkinter.CTkToplevel(self)
+        newWindow.title('Molecule')
+        newWindow.geometry('800x600')
+        newWindow.resizable(False, False)
+
+        # Get the SMILES string in the entry box
+        if adj_smiles_type is None or smiles is None:
+            messagebox.showerror('Error', 'Please select a type and enter a SMILES or InChI string')
+            return
+        
+        try:
+            if adj_smiles_type == 'SMILES':
+                ms = Chem.MolFromSmiles(smiles)
+            elif adj_smiles_type == 'InChI':
+                ms = Chem.MolFromInchi(smiles)
+            image = Draw.MolToImage(ms, size=(800, 600))
+            smile_image = customtkinter.CTkImage(dark_image=image, light_image=image, size=(800, 600))
+            image_label = customtkinter.CTkLabel(newWindow, image=smile_image, text='', width=800, height=600)
+            image_label.pack(fill='both', expand=True)
+
+            image_label.image = smile_image
+        except Exception:
+            messagebox.showerror('Error', 'Invalid SMILES string')
+            return
     # def generate_reaction_connections(self):
         
     #     for i in range(0,len(self.species_blocks),3):
