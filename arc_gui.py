@@ -45,7 +45,7 @@ class TabApp(customtkinter.CTkTabview):
 
         self.tab_view = projectInfo(master=self.tab("Project Information"))
         self.tab_view.pack(fill="both", expand=True,anchor="center")
-        self.tab_view2 = essSettings(master=self.tab("ESS Settings"), header_name="Gassian")
+        self.tab_view2 = essSettings(master=self.tab("ESS Settings"), header_name="Gaussian")
         self.tab_view2.pack(fill="both", expand=True,anchor="center")
         self.tab_view3 = essSettings(master=self.tab("ESS Settings"), header_name="Q-Chem")
         self.tab_view3.pack(fill="both", expand=True,anchor="center")

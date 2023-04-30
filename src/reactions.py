@@ -45,10 +45,31 @@ class Reactions(customtkinter.CTkFrame):
             self.rxn_label = customtkinter.CTkLabel(self, text=full_rxn)
             self.rxn_label.grid(row=1+i, column=1)
             
+            # Add entry for multiplicity
+            self.multiplicity_entry = customtkinter.CTkEntry(self, placeholder_text="[Optional] Multiplicity", placeholder_text_color="grey",
+                                                             width=100)
+            self.multiplicity_entry.grid(row=1+i, column=2, padx = 10)
+            
+            # Add Option for ts xyz guess
+            self.ts_guess_xyz_var = tk.BooleanVar()
+            self.ts_guess_xyz_var.set(0)
+            self.ts_guess_xyz = customtkinter.CTkCheckBox(self, text="", variable=self.ts_guess_xyz_var, command=lambda: self.create_xyz_entry(row=1+i))
+            self.ts_guess_xyz.grid(row=1+i, column=3)
+            
             # Append the group and label a list
             self.rxn_group_list.append(self.rxn_group)
             self.rxn_label_list.append(self.rxn_label)
             
+            
+    def create_xyz_entry(self, row):
+        
+        if self.ts_guess_xyz_var.get() == 1:
+            xyz_entry = customtkinter.CTkEntry(self, placeholder_text="XYZ", placeholder_text_color="grey",
+                                                width=200, height=200)
+            xyz_entry.grid(row=row, column=4)
+        elif self.ts_guess_xyz_var.get()==0:
+            
+            xyz_entry.destroy()
             
 
                         
